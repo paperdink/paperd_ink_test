@@ -6,8 +6,8 @@
 #include <Fonts/FreeMonoBold9pt7b.h>
 
 // DETAILS TO EDIT
-#define SSID     "wire" // your network SSID (name of wifi network)
-#define PASSWORD "avrmicro!2" // your network password
+#define SSID     "pitest" // your network SSID (name of wifi network)
+#define PASSWORD "pitest" // your network password
 #define TIME_ZONE "+07:00" // Your time zone. Daylight saving not handled yet.
 #define START_DAY_OFFSET 0
 

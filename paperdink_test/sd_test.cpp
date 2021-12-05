@@ -38,7 +38,7 @@ void test_sd_card()
   }
   Serial.println("SD OK!");
   drawBitmapFromSD("image.bmp", 0, 0);
-
+  delay(2000);
   digitalWrite(SD_EN, HIGH);
 }
 

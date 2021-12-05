@@ -54,28 +54,34 @@ void setup()
   // EPD tests
   display.init();
   // first update should be full refresh
-//  test_text_print();
-//  delay(2000);
-//  test_partial_update();
-//  delay(2000);
-     
+  test_text_print();
+  delay(2000);
+  test_partial_update();
+  delay(1000);
+
+  // Init again to use bufferd mode
+  display.init();
+  // first update should be full refresh
+  display.fillScreen(GxEPD_WHITE);
+  display.display(false);
+  
   // Buttons test
-//  test_button(&btn1, 1, 35);
-//  test_button(&btn2, 2, 120);
-//  test_button(&btn3, 3, 207);
-//  test_button(&btn4, 4, 290);
+  test_button(&btn1, 1, 35);
+  test_button(&btn2, 2, 120);
+  test_button(&btn3, 3, 207);
+  test_button(&btn4, 4, 290);
 
   // Buzzer test
-//  test_buzzer();
+  test_buzzer();
 
   // SD Card test
-//  test_sd_card();
+  test_sd_card();
 
   // GPIO Expander test
   test_expander();
 
   // WiFi Test
-//  test_wifi();
+  test_wifi();
   
   // End message
   print_success_msg();
@@ -117,7 +123,8 @@ void print_success_msg()
   display.println(success_msg2);
   
   display.display(false);
-
+  delay(500);
+  
   Serial.println("+=+=+=+=+=+=+=+=+=+=+=+=+=+=");
   Serial.println("     TESTING COMPLETED      ");
   Serial.println("+=+=+=+=+=+=+=+=+=+=+=+=+=+=");
@@ -204,14 +211,15 @@ void test_button(Button *btn, int8_t btn_num, uint16_t y)
   Serial.printf("Testing button %d\n", btn_num);
 
   display.fillScreen(GxEPD_WHITE);
+  display.setRotation(0);
   display.setFont(&FreeMonoBold9pt7b);
   display.setTextColor(GxEPD_BLACK);
-  display.setRotation(0);
+  
   display.setCursor(200, y);
   display.println("Press button -->");
   display.display(true);
-  bool buttonState = 0;
-  
+
+  bool buttonState = 0;  
   while(1){
     btn->loop();
     buttonState = btn->getState();
@@ -226,7 +234,7 @@ void test_text_print()
 {
   Serial.println("Simple print test");
   
-  display.setRotation(1);
+  display.setRotation(0);
   display.setFont(&FreeMonoBold9pt7b);
   display.setTextColor(GxEPD_BLACK);
   int16_t tbx, tby; uint16_t tbw, tbh;
