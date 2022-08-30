@@ -10,9 +10,9 @@ void test_sd_card();
 void test_wifi();
 void test_expander();
 
-const char PI_string[] = "Paperd.Ink";
-const char success_msg1[] = "Visit https://paperd.ink/docs";
-const char success_msg2[] = "to get started";
+char PI_string[] = "Paperd.Ink";
+char success_msg1[] = "Visit docs.paperd.ink";
+char success_msg2[] = "to get started";
 
 // Buttons
 Button btn1(BUTTON_1_PIN);
@@ -27,7 +27,7 @@ void setup()
   delay(100);
 
   Serial.println("**********************************");
-  Serial.println("Paperd.Ink revision 3 Test Program");
+  Serial.println("Paperd.Ink revision 4 Test Program");
   Serial.println("**********************************");
 
   // Board Init
