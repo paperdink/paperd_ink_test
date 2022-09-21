@@ -37,7 +37,7 @@
 #define EXT_GPIO1 P5
 #define EXT_GPIO2 P6
 #define EXT_GPIO3 P7
-#define PCF_I2C_ADDR 0x20
+#define PCF_I2C_ADDR 0x38
 
 // LiPo
 #define CHARGING_PIN 36
