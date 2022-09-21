@@ -5,14 +5,19 @@
 #include "mario_tune.h"
 #include "Roboto_Regular_12pt7b.h"
 
-// Tests
-void test_sd_card();
-void test_wifi();
-void test_expander();
+// Display
+// GDEQ042Z21
+GxEPD2_3C<GxEPD2_420c_Z21, GxEPD2_420c_Z21::HEIGHT> display(GxEPD2_420c_Z21(/*CS=5*/ EPD_CS, /*DC=*/ EPD_DC, /*RST=*/ EPD_RST, /*BUSY=*/ EPD_BUSY));
 
-char PI_string[] = "Paperd.Ink";
+// Tests
+void test_sd_card(GxEPD2_GFX& display);
+void test_wifi(GxEPD2_GFX& display);
+void test_expander(GxEPD2_GFX& display);
+
+char PI_string[] = "paperd.ink";
 char success_msg1[] = "Visit docs.paperd.ink";
 char success_msg2[] = "to get started";
+char merlot[] = "Merlot";
 
 // Buttons
 Button btn1(BUTTON_1_PIN);
@@ -26,9 +31,9 @@ void setup()
   Serial.println();
   delay(100);
 
-  Serial.println("**********************************");
-  Serial.println("Paperd.Ink revision 4 Test Program");
-  Serial.println("**********************************");
+  Serial.println("****************************************");
+  Serial.println("Paperd.Ink revision 4 COLOR Test Program");
+  Serial.println("****************************************");
 
   // Board Init
   pinMode(EPD_EN, OUTPUT);
@@ -53,35 +58,35 @@ void setup()
 
   // EPD tests
   display.init();
-  // first update should be full refresh
-  test_text_print();
-  delay(2000);
-  test_partial_update();
-  delay(1000);
-
-  // Init again to use bufferd mode
-  display.init();
-  // first update should be full refresh
-  display.fillScreen(GxEPD_WHITE);
-  display.display(false);
-  
-  // Buttons test
-  test_button(&btn1, 1, 35);
-  test_button(&btn2, 2, 120);
-  test_button(&btn3, 3, 207);
-  test_button(&btn4, 4, 290);
-
-  // Buzzer test
-  test_buzzer();
-
-  // SD Card test
-  test_sd_card();
-
-  // GPIO Expander test
-  test_expander();
-
-  // WiFi Test
-  test_wifi();
+//  // first update should be full refresh
+//  test_text_print();
+//  delay(2000);
+//  test_partial_update();
+//  delay(1000);
+//
+//  // Init again to use bufferd mode
+//  display.init();
+//  // first update should be full refresh
+//  display.fillScreen(GxEPD_WHITE);
+//  display.display(false);
+//  
+//  // Buttons test
+//  test_button(&btn1, 1, 35);
+//  test_button(&btn2, 2, 120);
+//  test_button(&btn3, 3, 207);
+//  test_button(&btn4, 4, 290);
+//
+//  // Buzzer test
+//  test_buzzer();
+//
+//  // SD Card test
+//  //test_sd_card(display);
+//
+//  // GPIO Expander test
+//  test_expander(display);
+//
+//  // WiFi Test
+//  test_wifi(display);
   
   // End message
   print_success_msg();
@@ -106,13 +111,23 @@ void print_success_msg()
   uint16_t x,y;
   
   display.setRotation(0);
-  display.setFont(&Roboto_Regular12pt7b);
+  display.setFont(&FreeMonoBold9pt7b);
   display.setTextColor(GxEPD_BLACK);
+  display.fillScreen(GxEPD_WHITE);
   
+  display.getTextBounds(PI_string, 0, 0, &tbx, &tby, &tbw, &tbh);
+  x = ((display.width() - tbw) / 2) - tbx;
+  y = 50;
+  display.setCursor(x, y);
+  display.println(PI_string);
+  display.setTextColor(GxEPD_RED);
+  display.setCursor(x+24, y+tbh+10);
+  display.println(merlot);
+
+  display.setTextColor(GxEPD_BLACK);
   display.getTextBounds(success_msg1, 0, 0, &tbx, &tby, &tbw, &tbh);
   x = ((display.width() - tbw) / 2) - tbx;
   y = ((display.height() - tbh) / 2) - tby;
-  display.fillScreen(GxEPD_WHITE);
   display.setCursor(x, y);
   display.println(success_msg1);
 
@@ -248,7 +263,10 @@ void test_text_print()
   {
     display.fillScreen(GxEPD_WHITE);
     display.setCursor(x, y);
-    display.print(PI_string);
+    display.println(PI_string);
+    display.setTextColor(GxEPD_RED);
+    display.setCursor(x+24, y+tbh+10);
+    display.println(merlot);
   }
   while (display.nextPage());
 }
@@ -264,30 +282,25 @@ void test_partial_update()
   uint16_t box_h = 20;
   uint16_t cursor_y = box_y + box_h - 6;
   float value = 27.3;
-  uint16_t incr = display.epd2.hasFastPartialUpdate ? 1 : 3;
+  //uint16_t incr = display.epd2.hasFastPartialUpdate ? 1 : 3;
   display.setFont(&FreeMonoBold9pt7b);
   display.setTextColor(GxEPD_BLACK);
 
   // show updates in the update box
-  for (uint16_t r = 0; r < 4; r++)
+  for (uint16_t r = 0; r < 1; r++)
   {
     display.setRotation(r);
     display.setPartialWindow(box_x, box_y, box_w, box_h);
-    for (uint16_t i = 1; i <= 3; i += incr)
+    display.firstPage();
+    do
     {
-      display.firstPage();
-      do
-      {
-        display.fillRect(box_x, box_y, box_w, box_h, GxEPD_WHITE);
-        display.setCursor(box_x, cursor_y);
-        display.print(value * i, 2);
-      }
-      while (display.nextPage());
-      delay(500);
+      display.fillRect(box_x, box_y, box_w, box_h, GxEPD_WHITE);
+      display.setCursor(box_x, cursor_y);
+      display.print(value, 2);
     }
-    
+    while (display.nextPage());
     delay(500);
-    
+  
     display.firstPage();
     do
     {
@@ -296,20 +309,4 @@ void test_partial_update()
     while (display.nextPage());
     delay(500);
   }
-}
-
-void test_image()
-{
-  Serial.println("Testing Image");
-  
-  display.setFullWindow();
-  display.setRotation(0);
-  
-  display.firstPage();
-  do
-  {
-    display.fillScreen(GxEPD_WHITE);
-    display.drawBitmap(0, 0, gImage_alberteinstein, 400, 300, GxEPD_BLACK);
-  }
-  while (display.nextPage());
 }

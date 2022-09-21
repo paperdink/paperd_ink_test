@@ -2,7 +2,9 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <GxEPD2_BW.h>
+#define ENABLE_GxEPD2_GFX 1
+#include "GxEPD2_GFX.h"
+#include <GxEPD2_3C.h>
 #include <Fonts/FreeMonoBold9pt7b.h>
 
 // DETAILS TO EDIT
@@ -62,8 +64,5 @@
 #define BUTTON_4_RTC_GPIO 12
 
 #define DEBOUNCE_TIME 10
-
-// GDEW042T2
-static GxEPD2_BW<GxEPD2_420, GxEPD2_420::HEIGHT> display(GxEPD2_420(/*CS=*/ EPD_CS, /*DC=*/ EPD_DC, /*RST=*/ EPD_RST, /*BUSY=*/ EPD_BUSY));
 
 #endif /* CONFIG_H */

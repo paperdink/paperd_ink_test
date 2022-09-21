@@ -5,7 +5,7 @@
 // PCF8574 GPIO extender
 PCF8574 pcf8574(PCF_I2C_ADDR, SDA, SCL);
 
-void test_expander()
+void test_expander(GxEPD2_GFX& display)
 {
   char pcf_failed[] = "PCF8574 Failed";
   char pcf_success[] = "PCF8574 Success";

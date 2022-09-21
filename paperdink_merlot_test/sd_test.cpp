@@ -8,10 +8,10 @@
 #define SdFile File
 #define seekSet seek
 
-void drawBitmapFromSD(const char *filename, int16_t x, int16_t y, bool with_color = true);
-void drawBitmapFromSD_Buffered(const char *filename, int16_t x, int16_t y, bool with_color = true, bool partial_update = false, bool overwrite = false);
+void drawBitmapFromSD(GxEPD2_GFX& display, const char *filename, int16_t x, int16_t y, bool with_color = true);
+void drawBitmapFromSD_Buffered(GxEPD2_GFX& display, const char *filename, int16_t x, int16_t y, bool with_color = true, bool partial_update = false, bool overwrite = false);
 
-void test_sd_card()
+void test_sd_card(GxEPD2_GFX& display)
 {  
   digitalWrite(SD_EN, LOW);
   char sd_failed[] = "SD card failed";
@@ -37,7 +37,7 @@ void test_sd_card()
     }
   }
   Serial.println("SD OK!");
-  drawBitmapFromSD("image.bmp", 0, 0);
+  drawBitmapFromSD(display, "image.bmp", 0, 0);
   delay(2000);
   digitalWrite(SD_EN, HIGH);
 }
@@ -76,7 +76,7 @@ uint32_t read32(SdFile& f)
   return result;
 }
 
-void drawBitmapFromSD(const char *filename, int16_t x, int16_t y, bool with_color)
+void drawBitmapFromSD(GxEPD2_GFX& display, const char *filename, int16_t x, int16_t y, bool with_color)
 {
   SdFile file;
   bool valid = false; // valid format to be handled
@@ -266,7 +266,7 @@ void drawBitmapFromSD(const char *filename, int16_t x, int16_t y, bool with_colo
   }
 }
 
-void drawBitmapFromSD_Buffered(const char *filename, int16_t x, int16_t y, bool with_color, bool partial_update, bool overwrite)
+void drawBitmapFromSD_Buffered(GxEPD2_GFX& display, const char *filename, int16_t x, int16_t y, bool with_color, bool partial_update, bool overwrite)
 {
   SdFile file;
   bool valid = false; // valid format to be handled

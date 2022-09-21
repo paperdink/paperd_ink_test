@@ -60,7 +60,7 @@ int8_t connect_wifi(){
   return 0;
 }
 
-void test_wifi(){
+void test_wifi(GxEPD2_GFX& display){
   Serial.println("Testing Wifi");
   
   char date_str[20];

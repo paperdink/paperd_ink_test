@@ -1,4 +1,4 @@
-# Basic tests for paperd.ink rev4
+# Basic tests for paperd.ink rev4 Color
 Each revision has a branch
 
 ## Install Library Dependencies (from arduino library manager)
