@@ -19,4 +19,4 @@ Each revision has a branch
 4) Change directory to where `paperdink_test.ino.bin` and other bin files are
 5) - **For mac and linux:** Upload using following command. Replace ``<port>`` with tty port on mac/linux.
 ``esptool.py --chip esp32 --port <port> --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 boot_app0.bin 0x1000 bootloader_qio_80m.bin 0x10000 paperdink_test.ino.bin 0x8000 paperdink_test.ino.partitions.bin``.
-   - **For Windows:** Open powershell window in same directory, and type ``.\upload``. The script will autodetect the COM port and upload the binary.
+   - **For Windows:** Open powershell window in same directory, and type ``.\upload_merlot``. The script will autodetect the COM port and upload the binary.
