@@ -47,7 +47,7 @@
 #define DEFAULT_SCL SCL;
 
 // Uncomment to enable printing out nice debug messages.
- // #define PCF8574_DEBUG
+// #define PCF8574_DEBUG
 
 // Uncomment for low memory usage this prevent use of complex DigitalInput structure and free 7byte of memory
 // #define PCF8574_LOW_MEMORY
@@ -82,23 +82,23 @@
 	#define READ_ELAPSED_TIME 10
 #endif
 
-//#define P0  	B00000001
-//#define P1  	B00000010
-//#define P2  	B00000100
-//#define P3  	B00001000
-//#define P4  	B00010000
-//#define P5  	B00100000
-//#define P6  	B01000000
-//#define P7  	B10000000
+//#define P0    B00000001
+//#define P1    B00000010
+//#define P2    B00000100
+//#define P3    B00001000
+//#define P4    B00010000
+//#define P5    B00100000
+//#define P6    B01000000
+//#define P7    B10000000
 //
-#define P0  	0
-#define P1  	1
-#define P2  	2
-#define P3  	3
-#define P4  	4
-#define P5  	5
-#define P6  	6
-#define P7  	7
+#define P0      0
+#define P1      1
+#define P2      2
+#define P3      3
+#define P4      4
+#define P5      5
+#define P6      6
+#define P7      7
 
 #include <math.h>
 
@@ -106,8 +106,8 @@
 class PCF8574 {
 public:
 
-	PCF8574(uint8_t address);
-	PCF8574(uint8_t address, uint8_t interruptPin,  void (*interruptFunction)() );
+PCF8574(uint8_t address);
+PCF8574(uint8_t address, uint8_t interruptPin,  void (*interruptFunction)() );
 
 #if !defined(__AVR) && !defined(__STM32F1__) && !defined(TEENSYDUINO)
 	PCF8574(uint8_t address, uint8_t sda, uint8_t scl);
@@ -115,7 +115,7 @@ public:
 #endif
 
 #ifdef ESP32
-	///// changes for second i2c bus
+    ///// changes for second i2c bus
 	PCF8574(TwoWire *pWire, uint8_t address);
 	PCF8574(TwoWire *pWire, uint8_t address, uint8_t sda, uint8_t scl);
 
@@ -123,37 +123,37 @@ public:
 	PCF8574(TwoWire *pWire, uint8_t address, uint8_t sda, uint8_t scl, uint8_t interruptPin,  void (*interruptFunction)());
 #endif
 
-	bool begin();
-	void pinMode(uint8_t pin, uint8_t mode, uint8_t output_start = HIGH);
+bool begin();
+void pinMode(uint8_t pin, uint8_t mode, uint8_t output_start = HIGH);
 
-	void encoder(uint8_t pinA, uint8_t pinB);
+void encoder(uint8_t pinA, uint8_t pinB);
 
-	void attachInterrupt();
-	void detachInterrupt();
+void attachInterrupt();
+void detachInterrupt();
 
-	void readBuffer(bool force = true);
-	uint8_t digitalRead(uint8_t pin, bool forceReadNow = false);
+void readBuffer(bool force = true);
+uint8_t digitalRead(uint8_t pin, bool forceReadNow = false);
 	#ifndef PCF8574_LOW_MEMORY
-		struct DigitalInput {
-			uint8_t p0;
-			uint8_t p1;
-			uint8_t p2;
-			uint8_t p3;
-			uint8_t p4;
-			uint8_t p5;
-			uint8_t p6;
-			uint8_t p7;
-		} digitalInput;
+	struct DigitalInput {
+		uint8_t p0;
+		uint8_t p1;
+		uint8_t p2;
+		uint8_t p3;
+		uint8_t p4;
+		uint8_t p5;
+		uint8_t p6;
+		uint8_t p7;
+	} digitalInput;
 
 
-		DigitalInput digitalReadAll(void);
+	DigitalInput digitalReadAll(void);
 
-		bool digitalWriteAll(PCF8574::DigitalInput digitalInput);
+	bool digitalWriteAll(PCF8574::DigitalInput digitalInput);
 	#else
-		byte digitalReadAll(void);
-		bool digitalWriteAll(byte digitalInput);
+	byte digitalReadAll(void);
+	bool digitalWriteAll(byte digitalInput);
 	#endif
-	bool digitalWrite(uint8_t pin, uint8_t value);
+bool digitalWrite(uint8_t pin, uint8_t value);
 
 #ifdef MISCHIANTI_ENCODER_ALGORITHM
 	bool readEncoderValueMischianti(uint8_t pinA, uint8_t pinB, volatile long *encoderValue, bool reverseRotation = false);
@@ -164,8 +164,8 @@ public:
 	int8_t readEncoderValuePoki(uint8_t pinA, uint8_t pinB);
 #endif
 
-//	bool readEncoderValueEvolved(uint8_t pinA, uint8_t pinB, volatile long *encoderValue, bool reverseRotation = false);
-//	int8_t readEncoderValueEvolved(uint8_t pinA, uint8_t pinB);
+//  bool readEncoderValueEvolved(uint8_t pinA, uint8_t pinB, volatile long *encoderValue, bool reverseRotation = false);
+//  int8_t readEncoderValueEvolved(uint8_t pinA, uint8_t pinB);
 
 #ifdef SEQUENCE_ENCODER_ALGORITHM
 	bool readEncoderValueSequence(uint8_t pinA, uint8_t pinB, volatile long *encoderValue, bool reverseRotation = false);
@@ -180,23 +180,27 @@ public:
 	int8_t readEncoderValue(uint8_t pinA, uint8_t pinB);
 #endif
 
-	int getLatency() const {
-		return latency;
-	}
+int getLatency() const
+{
+	return latency;
+}
 
-	void setLatency(int latency = READ_ELAPSED_TIME) {
-		this->latency = latency;
-	}
+void setLatency(int latency = READ_ELAPSED_TIME)
+{
+	this->latency = latency;
+}
 
-	uint8_t getTransmissionStatusCode() const {
-		return transmissionStatus;
-	}
+uint8_t getTransmissionStatusCode() const
+{
+	return transmissionStatus;
+}
 
-	bool isLastTransmissionSuccess(){
-		return transmissionStatus==0;
-	}
+bool isLastTransmissionSuccess()
+{
+	return transmissionStatus==0;
+}
 private:
-	uint8_t _address;
+uint8_t _address;
 
 	#if !defined(DEFAULT_SDA)
 	#  if defined(__STM32F1__)
@@ -221,45 +225,47 @@ private:
 	#  endif
 	#endif
 
-	uint8_t _sda = DEFAULT_SDA;
-	uint8_t _scl = DEFAULT_SCL;
+uint8_t _sda = DEFAULT_SDA;
+uint8_t _scl = DEFAULT_SCL;
 
-	TwoWire *_wire;
+TwoWire *_wire;
 
-	bool _usingInterrupt = false;
-	uint8_t _interruptPin = 2;
-	void (*_interruptFunction)(){};
+bool _usingInterrupt = false;
+uint8_t _interruptPin = 2;
+void (*_interruptFunction)()
+{
+};
 
-	byte writeMode 			= 	B00000000;
-	byte writeModeUp		= 	B00000000;
-	byte readMode 			= 	B00000000;
-	byte readModePullUp 	= 	B00000000;
-	byte readModePullDown 	= 	B00000000;
-	byte byteBuffered 		= 	B00000000;
-	byte resetInitial		= 	B00000000;
-	byte initialBuffer		= 	B00000000;
-	unsigned long lastReadMillis = 0;
+byte writeMode          =   B00000000;
+byte writeModeUp        =   B00000000;
+byte readMode           =   B00000000;
+byte readModePullUp     =   B00000000;
+byte readModePullDown   =   B00000000;
+byte byteBuffered       =   B00000000;
+byte resetInitial       =   B00000000;
+byte initialBuffer      =   B00000000;
+unsigned long lastReadMillis = 0;
 
-	byte writeByteBuffered = B00000000;
+byte writeByteBuffered = B00000000;
 
-	volatile byte encoderValues = B00000000;
+volatile byte encoderValues = B00000000;
 
-	uint8_t prevNextCode = 0;
-	uint16_t store=0;
+uint8_t prevNextCode = 0;
+uint16_t store=0;
 
-	int latency = READ_ELAPSED_TIME;
+int latency = READ_ELAPSED_TIME;
 
-	bool checkProgression(byte oldValA, byte newValA, byte oldValB, byte newValB, byte validProgression);
+bool checkProgression(byte oldValA, byte newValA, byte oldValB, byte newValB, byte validProgression);
 
-//	byte validCW = B11100001;
-//	byte validCCW = B01001011;
-	byte validCW = B01001011;
-	byte validCCW = B11100001;
+//  byte validCW = B11100001;
+//  byte validCCW = B01001011;
+byte validCW = B01001011;
+byte validCCW = B11100001;
 
-	uint8_t transmissionStatus = 0;
+uint8_t transmissionStatus = 0;
 
-	void setVal(uint8_t pin, uint8_t value);
-	bool digitalWriteAllBytes(byte allpins);
+void setVal(uint8_t pin, uint8_t value);
+bool digitalWriteAllBytes(byte allpins);
 };
 
 #endif
