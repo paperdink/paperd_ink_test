@@ -74,16 +74,10 @@ void setup()
     // EPD tests
 	display.init(115200);
     // first update should be full refresh
-	//test_text_print(display);
-	//delay(2000);
-	//test_partial_update(display);
-	//delay(1000);
-
-    // Init again to use bufferd mode
-	//display.init(115200);
-    //// first update should be full refresh
-	display.fillScreen(GxEPD_WHITE);
-	display.display(false);
+	test_text_print(display);
+	delay(2000);
+	test_partial_update(display);
+	delay(1000);
 
     // Buttons test
     test_button(display, &btn1, 1, 35);
@@ -251,9 +245,8 @@ void test_button(GxEPD2_GFX& display, Button *btn, int8_t btn_num, uint16_t y)
 
 	display.setCursor(200, y);
 	display.print("Press button -->");
-    //display.display(true);
-    display.displayWindow(200, y-15, 200, 25);
-    //display.displayWindow(0, 0, 400, 300);
+    display.display(true);
+    //display.displayWindow(200, y-15, 200, 25);
 
 	bool buttonState = 0;
 	while(1){
