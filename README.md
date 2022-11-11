@@ -1,5 +1,4 @@
 # Basic tests for paperd.ink rev4
-Each revision has a branch
 
 ## Install Library Dependencies (from arduino library manager)
   - Adafruit GFX library by Adafruit (tested with v1.7.5)
@@ -16,5 +15,5 @@ Each revision has a branch
    This can be a router or a mobile hotspot
 2) Upload image.bmp onto a FAT32 formatted microSD card
 3) Insert microSD card in paperd.ink
-4) Change directory to bin folder
+4) Change directory to 'mfg' folder
 5) Run appropriate script based on OS and device.
