@@ -4,6 +4,9 @@
   - Adafruit GFX library by Adafruit (tested with v1.7.5)
   - GxEPD2 by Jean-Marc Zingg version (tested with v1.3.9)
 
+## Note:
+- This seems to work only on ESP32 Arduino core v1.0.4 at the moment.
+
 ## Usage from Arduino
 1) Update wifi details and time zone in config.h
 2) Upload image.bmp onto a FAT32 formatted microSD card
