@@ -208,8 +208,6 @@ bool PCF8574::begin()
     // Check if there are pins to set low
 	if(writeMode>0 || readMode>0){
 		DEBUG_PRINTLN("Set write mode");
-		_wire->beginTransmission(_address);
-
 
 		DEBUG_PRINT("resetInitial pin ");
 #ifdef PCF8574_SOFT_INITIALIZATION
