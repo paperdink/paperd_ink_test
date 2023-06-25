@@ -73,7 +73,7 @@ void setup()
 	delay(50);
 
     // EPD tests
-	display.init(115200);
+	display.init();
     // first update should be full refresh
 	test_text_print(display);
 	delay(2000);
