@@ -23,6 +23,7 @@ void test_buzzer(GxEPD2_GFX& display);
 void test_partial_update(GxEPD2_GFX& display);
 void test_text_print(GxEPD2_GFX& display);
 void test_button(GxEPD2_GFX& display, Button *btn, int8_t btn_num, uint16_t y);
+void test_battery(GxEPD2_GFX& display);
 void print_success_msg(GxEPD2_GFX& display);
 
 char PI_string[] = "paperd.ink";
@@ -91,6 +92,9 @@ void setup()
 
     // GPIO Expander test
 	test_expander(display);
+
+    // Battery test
+	test_battery(display);
     
     // SD Card test
 	test_sd_card(display);
@@ -329,4 +333,38 @@ void test_partial_update(GxEPD2_GFX& display)
 		display.displayWindow(box_x, box_y, box_w, box_h);
 		delay(1000);
 	}
+}
+
+void test_battery(GxEPD2_GFX& display)
+{
+	Serial.println("Testing battery");
+
+	// read charging pin
+	uint8_t charging = digitalRead(CHARGING_PIN) ^ 1;
+	Serial.printf("Charging: %d\r\n", charging);
+
+	// read adc
+	digitalWrite(BATT_EN, LOW);
+	delay(10);
+	analogReadResolution(12);
+	int adc = analogReadMilliVolts(BATTERY_VOLTAGE);
+	digitalWrite(BATT_EN, HIGH);
+
+	// calculate battery voltage according to divider resistors
+	// Vbat = (R1+R2)/R2 = (470000 + 1600000) / 1600000 = 1.29375
+	double vbat = ((double(adc) * 1.29375) / 1000);
+	Serial.printf("ADC(%d): %d\r\n", BATTERY_VOLTAGE, adc);
+	Serial.printf("Battery VBat: %f\r\n", vbat);
+
+	display.setRotation(0);
+	display.setFont(&FreeMonoBold9pt7b);
+	display.setTextColor(GxEPD_BLACK);
+	display.fillScreen(GxEPD_WHITE);
+	display.setCursor(0, 0);
+	display.printf(" \n");
+	display.printf("      ADC: %d\n", adc);
+	display.printf("     VBat: %.2f\n", vbat);
+	display.printf(" Charging: %d\n", charging);
+	display.display(false);
+	delay(5000);
 }

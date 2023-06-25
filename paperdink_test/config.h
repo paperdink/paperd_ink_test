@@ -49,7 +49,7 @@
 // LiPo
 #define CHARGING_PIN 36
 #define BATT_EN 25
-#define BATTERY_VOLTAGE 34
+#define BATTERY_VOLTAGE 39
 
 // Buzzer
 #define BUZR 26
