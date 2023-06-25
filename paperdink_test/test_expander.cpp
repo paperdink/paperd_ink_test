@@ -1,4 +1,3 @@
-
 #include "config.h"
 #include "PCF8574.h"
 
@@ -10,7 +9,7 @@ void test_expander(GxEPD2_GFX& display)
 	char pcf_failed[] = "PCF8574 Failed";
 	char pcf_success[] = "PCF8574 Success";
 	int16_t tbx, tby; uint16_t tbw, tbh;
-	uint16_t x,y;
+	uint16_t x, y;
 	char *result;
 
 	display.fillScreen(GxEPD_WHITE);
@@ -19,11 +18,11 @@ void test_expander(GxEPD2_GFX& display)
 	display.setRotation(0);
 
 	pcf8574.pinMode(P0, OUTPUT);
-	if(pcf8574.begin()){
+	if (pcf8574.begin()) {
 		Serial.println(pcf_success);
 		pcf8574.digitalWrite(P0, HIGH);
 		result = pcf_success;
-	}else{
+	} else {
 		Serial.println(pcf_failed);
 		result = pcf_failed;
 	}
@@ -35,8 +34,8 @@ void test_expander(GxEPD2_GFX& display)
 	display.println(result);
 	display.display(false);
 
-	if(result == pcf_failed){
-		while(1){
+	if (result == pcf_failed) {
+		while (1) {
 		}
 	}
 

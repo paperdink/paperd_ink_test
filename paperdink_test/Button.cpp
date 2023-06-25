@@ -64,20 +64,18 @@ int Button::getStateRaw(void)
 
 bool Button::isPressed(void)
 {
-	if(previousSteadyState == HIGH && lastSteadyState == LOW){
+	if (previousSteadyState == HIGH && lastSteadyState == LOW)
 		return true;
-	}else{
+	else
 		return false;
-	}
 }
 
 bool Button::isReleased(void)
 {
-	if(previousSteadyState == LOW && lastSteadyState == HIGH){
+	if (previousSteadyState == LOW && lastSteadyState == HIGH)
 		return true;
-	}else{
+	else
 		return false;
-	}
 }
 
 void Button::setCountMode(int mode)
@@ -97,41 +95,39 @@ void Button::resetCount(void)
 
 void Button::loop(void)
 {
-    // read the state of the switch/button:
+	// read the state of the switch/button:
 	currentState = digitalRead(btnPin);
 
-    // check to see if you just pressed the button
-    // (i.e. the input went from LOW to HIGH), and you've waited long enough
-    // since the last press to ignore any noise:
+	// check to see if you just pressed the button
+	// (i.e. the input went from LOW to HIGH), and you've waited long enough
+	// since the last press to ignore any noise:
 
-    // If the switch/button changed, due to noise or pressing:
-	if(currentState != lastFlickerableState){
-        // reset the debouncing timer
+	// If the switch/button changed, due to noise or pressing:
+	if (currentState != lastFlickerableState) {
+		// reset the debouncing timer
 		lastDebounceTime = millis();
-        // save the the last flickerable state
+		// save the the last flickerable state
 		lastFlickerableState = currentState;
 	}
 
-	if((millis() - lastDebounceTime) >= debounceTime){
-        // whatever the reading is at, it's been there for longer than the debounce
-        // delay, so take it as the actual current state:
+	if ((millis() - lastDebounceTime) >= debounceTime) {
+		// whatever the reading is at, it's been there for longer than the debounce
+		// delay, so take it as the actual current state:
 
-        // save the the steady state
+		// save the the steady state
 		previousSteadyState = lastSteadyState;
 		lastSteadyState = currentState;
 	}
 
-	if(previousSteadyState != lastSteadyState){
-		if(countMode == COUNT_BOTH){
+	if (previousSteadyState != lastSteadyState) {
+		if (countMode == COUNT_BOTH) {
 			count++;
-		}else if(countMode == COUNT_FALLING){
-			if(previousSteadyState == HIGH && lastSteadyState == LOW){
+		} else if (countMode == COUNT_FALLING) {
+			if (previousSteadyState == HIGH && lastSteadyState == LOW)
 				count++;
-			}
-		}else if(countMode == COUNT_RISING){
-			if(previousSteadyState == LOW && lastSteadyState == HIGH){
+		} else if (countMode == COUNT_RISING) {
+			if (previousSteadyState == LOW && lastSteadyState == HIGH)
 				count++;
-			}
 		}
 	}
 }

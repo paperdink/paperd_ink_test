@@ -1,4 +1,3 @@
-
 #ifndef CONFIG_H
 #define CONFIG_H
 
@@ -13,9 +12,9 @@
 #define PI_CLASSIC (true)
 //#define PI_MERLOT (true)
 
-#define SSID     "rgpitest" // your network SSID (name of wifi network)
-#define PASSWORD "rgpitest" // your network password
-#define TIME_ZONE "+07:00" // Your time zone. Daylight saving not handled yet.
+#define SSID     "rgpitest"     // your network SSID (name of wifi network)
+#define PASSWORD "rgpitest"     // your network password
+#define TIME_ZONE "+07:00"      // Your time zone. Daylight saving not handled yet.
 #define START_DAY_OFFSET 0
 
 // PIN ASSIGNMENT

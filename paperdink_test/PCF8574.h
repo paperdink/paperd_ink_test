@@ -58,7 +58,7 @@
 //#define PCF8574_SOFT_INITIALIZATION
 
 // Select an algorithm to manage encoder progression
- #define BASIC_ENCODER_ALGORITHM
+#define BASIC_ENCODER_ALGORITHM
 // #define MISCHIANTI_ENCODER_ALGORITHM
 // #define SEQUENCE_ENCODER_ALGORITHM_REDUCED
 // #define SEQUENCE_ENCODER_ALGORITHM
@@ -69,17 +69,17 @@
 
 // Setup debug printing macros.
 #ifdef PCF8574_DEBUG
-	#define DEBUG_PRINT(...) { DEBUG_PRINTER.print(__VA_ARGS__); }
-	#define DEBUG_PRINTLN(...) { DEBUG_PRINTER.println(__VA_ARGS__); }
+#define DEBUG_PRINT(...) { DEBUG_PRINTER.print(__VA_ARGS__); }
+#define DEBUG_PRINTLN(...) { DEBUG_PRINTER.println(__VA_ARGS__); }
 #else
-	#define DEBUG_PRINT(...) {}
-	#define DEBUG_PRINTLN(...) {}
+#define DEBUG_PRINT(...) {}
+#define DEBUG_PRINTLN(...) {}
 #endif
 
 #ifdef PCF8574_LOW_LATENCY
-	#define READ_ELAPSED_TIME 0
+#define READ_ELAPSED_TIME 0
 #else
-	#define READ_ELAPSED_TIME 10
+#define READ_ELAPSED_TIME 10
 #endif
 
 //#define P0    B00000001
@@ -107,20 +107,20 @@ class PCF8574 {
 public:
 
 PCF8574(uint8_t address);
-PCF8574(uint8_t address, uint8_t interruptPin,  void (*interruptFunction)() );
+PCF8574(uint8_t address, uint8_t interruptPin, void(*interruptFunction)());
 
 #if !defined(__AVR) && !defined(__STM32F1__) && !defined(TEENSYDUINO)
 	PCF8574(uint8_t address, uint8_t sda, uint8_t scl);
-	PCF8574(uint8_t address, uint8_t sda, uint8_t scl, uint8_t interruptPin,  void (*interruptFunction)());
+	PCF8574(uint8_t address, uint8_t sda, uint8_t scl, uint8_t interruptPin, void(*interruptFunction)());
 #endif
 
 #ifdef ESP32
-    ///// changes for second i2c bus
+	///// changes for second i2c bus
 	PCF8574(TwoWire *pWire, uint8_t address);
 	PCF8574(TwoWire *pWire, uint8_t address, uint8_t sda, uint8_t scl);
 
-	PCF8574(TwoWire *pWire, uint8_t address, uint8_t interruptPin,  void (*interruptFunction)() );
-	PCF8574(TwoWire *pWire, uint8_t address, uint8_t sda, uint8_t scl, uint8_t interruptPin,  void (*interruptFunction)());
+	PCF8574(TwoWire *pWire, uint8_t address, uint8_t interruptPin, void(*interruptFunction)());
+	PCF8574(TwoWire *pWire, uint8_t address, uint8_t sda, uint8_t scl, uint8_t interruptPin, void(*interruptFunction)());
 #endif
 
 bool begin();
@@ -133,7 +133,7 @@ void detachInterrupt();
 
 void readBuffer(bool force = true);
 uint8_t digitalRead(uint8_t pin, bool forceReadNow = false);
-	#ifndef PCF8574_LOW_MEMORY
+#ifndef PCF8574_LOW_MEMORY
 	struct DigitalInput {
 		uint8_t p0;
 		uint8_t p1;
@@ -149,10 +149,10 @@ uint8_t digitalRead(uint8_t pin, bool forceReadNow = false);
 	DigitalInput digitalReadAll(void);
 
 	bool digitalWriteAll(PCF8574::DigitalInput digitalInput);
-	#else
+#else
 	byte digitalReadAll(void);
 	bool digitalWriteAll(byte digitalInput);
-	#endif
+#endif
 bool digitalWrite(uint8_t pin, uint8_t value);
 
 #ifdef MISCHIANTI_ENCODER_ALGORITHM
@@ -197,33 +197,33 @@ uint8_t getTransmissionStatusCode() const
 
 bool isLastTransmissionSuccess()
 {
-	return transmissionStatus==0;
+	return transmissionStatus == 0;
 }
 private:
 uint8_t _address;
 
-	#if !defined(DEFAULT_SDA)
-	#  if defined(__STM32F1__)
-	#    define DEFAULT_SDA PB7
-	#  elif defined(ESP8266)
-	#    define DEFAULT_SDA 4
-	#  elif defined(SDA)
-	#    define DEFAULT_SDA SDA
-	#  else
-	#    error "Error define DEFAULT_SDA, SDA not declared, if you have this error contact the mantainer"
-	#  endif
-	#endif
-	#if !defined(DEFAULT_SCL)
-	#  if defined(__STM32F1__)
-	#    define DEFAULT_SCL PB6
-	#  elif defined(ESP8266)
-	#    define DEFAULT_SCL 5
-	#  elif defined(SDA)
-	#    define DEFAULT_SCL SCL
-	#  else
-	#    error "Error define DEFAULT_SCL, SCL not declared, if you have this error contact the mantainer"
-	#  endif
-	#endif
+#if !defined(DEFAULT_SDA)
+#  if defined(__STM32F1__)
+#    define DEFAULT_SDA PB7
+#  elif defined(ESP8266)
+#    define DEFAULT_SDA 4
+#  elif defined(SDA)
+#    define DEFAULT_SDA SDA
+#  else
+#    error "Error define DEFAULT_SDA, SDA not declared, if you have this error contact the mantainer"
+#  endif
+#endif
+#if !defined(DEFAULT_SCL)
+#  if defined(__STM32F1__)
+#    define DEFAULT_SCL PB6
+#  elif defined(ESP8266)
+#    define DEFAULT_SCL 5
+#  elif defined(SDA)
+#    define DEFAULT_SCL SCL
+#  else
+#    error "Error define DEFAULT_SCL, SCL not declared, if you have this error contact the mantainer"
+#  endif
+#endif
 
 uint8_t _sda = DEFAULT_SDA;
 uint8_t _scl = DEFAULT_SCL;
@@ -236,14 +236,14 @@ void (*_interruptFunction)()
 {
 };
 
-byte writeMode          =   B00000000;
-byte writeModeUp        =   B00000000;
-byte readMode           =   B00000000;
-byte readModePullUp     =   B00000000;
-byte readModePullDown   =   B00000000;
-byte byteBuffered       =   B00000000;
-byte resetInitial       =   B00000000;
-byte initialBuffer      =   B00000000;
+byte writeMode = B00000000;
+byte writeModeUp = B00000000;
+byte readMode = B00000000;
+byte readModePullUp = B00000000;
+byte readModePullDown = B00000000;
+byte byteBuffered = B00000000;
+byte resetInitial = B00000000;
+byte initialBuffer = B00000000;
 unsigned long lastReadMillis = 0;
 
 byte writeByteBuffered = B00000000;
@@ -251,7 +251,7 @@ byte writeByteBuffered = B00000000;
 volatile byte encoderValues = B00000000;
 
 uint8_t prevNextCode = 0;
-uint16_t store=0;
+uint16_t store = 0;
 
 int latency = READ_ELAPSED_TIME;
 
@@ -269,4 +269,3 @@ bool digitalWriteAllBytes(byte allpins);
 };
 
 #endif
-

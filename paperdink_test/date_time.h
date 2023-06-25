@@ -1,4 +1,3 @@
-
 #ifndef TIME_H
 #define TIME_H
 
@@ -7,8 +6,8 @@
 
 // Time definitions
 struct time_struct {
-	char wday[4];
-	char month[4];
+	char	wday[4];
+	char	month[4];
 	uint8_t month_num;
 	uint8_t mday;
 	uint8_t mil_hour;
@@ -16,7 +15,7 @@ struct time_struct {
 	uint8_t min;
 	uint8_t sec;
 	uint8_t day_offset; // 1st day of the month offset, Monday = 0
-	int year;
+	int	year;
 };
 
 extern RTC_DATA_ATTR struct time_struct now;
